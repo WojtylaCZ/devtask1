@@ -1,0 +1,65 @@
+{
+  "name": "REPLACE",
+  "version": "0.1.0",
+  "description": "Vojtech Uhlir - REPLACE",
+  "author": "Vojtech Uhlir <uhlirvoj1@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WojtylaCZ/REPLACE"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node ./src/index.ts",
+    "start:watch": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/index.ts",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "tslint --fix --project .",
+    "prettier": "prettier --single-quote --write \"./**/*.{js,ts,json,md}\" --ignore-path \"./.gitignore\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --project . --fix",
+      "git add"
+    ],
+    "*.{js,ts,json,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "12factor-config": "2.0.0",
+    "@types/dotenv": "6.1.1",
+    "@types/jest": "24.0.11",
+    "@types/koa": "2.0.48",
+    "@types/koa-router": "7.0.40",
+    "@types/supertest": "2.0.7",
+    "dotenv": "7.0.0",
+    "jest": "24.7.1",
+    "koa": "2.7.0",
+    "koa-body": "4.1.0",
+    "koa-router": "7.4.0",
+    "log4js": "4.1.0",
+    "supertest": "4.0.2",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.1.0",
+    "typescript": "3.4.5"
+  },
+  "devDependencies": {
+    "husky": "2.1.0",
+    "lint-staged": "8.1.5",
+    "nodemon": "1.18.11",
+    "prettier": "1.17.0",
+    "tslint": "5.16.0",
+    "tslint-config-prettier": "1.18.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}
