@@ -1,7 +1,7 @@
 FROM node:10 as base
 
 ENV NODE_ENV=production
-ENV PORT=6010
+ENV PORT=8080
 
 WORKDIR /app
 

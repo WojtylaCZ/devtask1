@@ -70,7 +70,8 @@ describe('complexity api', () => {
     expect.assertions(1);
     const text = 'foo';
     const response = await request(app)
-      .post(router.url('text-lexical-complexity', { mode: 'foo' }))
+      .post(router.url('text-lexical-complexity', {}))
+      .query({ mode: 'foo' })
       .send({ text });
 
     expect(response.status).toBe(400);

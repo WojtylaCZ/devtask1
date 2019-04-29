@@ -1,13 +1,13 @@
 {
-  "name": "REPLACE",
+  "name": "DevelopmentTask",
   "version": "0.1.0",
-  "description": "Vojtech Uhlir - REPLACE",
+  "description": "Vojtech Uhlir - devtask",
   "author": "Vojtech Uhlir <uhlirvoj1@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/WojtylaCZ/REPLACE"
+    "url": "https://github.com/WojtylaCZ/devtask1"
   },
   "scripts": {
     "build": "tsc",
