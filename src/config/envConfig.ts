@@ -7,6 +7,11 @@ import { envConfigSetup } from './envConfigSetup';
 
 export interface IEnvConfig {
   appPort: number;
+  dbHost: string;
+  dbPort: number;
+  dbName: string;
+  dbUsername: string;
+  dbPassword: string;
   env: string;
 }
 

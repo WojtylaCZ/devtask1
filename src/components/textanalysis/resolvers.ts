@@ -4,6 +4,7 @@ import { ApiError } from '../../common/api/errors/ApiError';
 import IApiResponse from '../../common/api/IApiResponse';
 
 import { IComplexityApiResponse, ITextInput } from './interfaces';
+import NonLexicalWordSchema from './models/NonLexicalWordSchema';
 import { getLexicalDensity } from './utils';
 import { complexityApiBody, modeApiParam } from './validations';
 
@@ -31,7 +32,14 @@ export async function lexicalComplexity(body: ITextInput, params: any): Promise<
   }
 
   // Resolution
-  let overallResult;
+  const nonLexicalWordsSet = new Set();
+  const nonLexicalWords = await NonLexicalWordSchema.find();
+
+  for (const word of nonLexicalWords) {
+    nonLexicalWordsSet.add(word.value.toLowerCase());
+  }
+
+  let overallResult = 0;
   let sentencesResult;
   if (params.mode && params.mode === 'verbose') {
     const sentences = textInSenteces.split('.');
@@ -40,7 +48,7 @@ export async function lexicalComplexity(body: ITextInput, params: any): Promise<
     for (const sentence of sentences) {
       if (sentence.length > 0) {
         // Decimal rounding and trailing zeros needs to be better addressed
-        sentencesResult.push(Math.round(getLexicalDensity(sentence) * 100) / 100);
+        sentencesResult.push(Math.round(getLexicalDensity(sentence, nonLexicalWordsSet) * 100) / 100);
       }
     }
   }
@@ -48,8 +56,9 @@ export async function lexicalComplexity(body: ITextInput, params: any): Promise<
   let textForOverall = textInSenteces.replace(/[.]/g, ' ');
   textForOverall = textForOverall.replace(/\s\s+/g, ' ');
 
-  // Decimal rounding and trailing zeros needs to be better addressed
-  overallResult = Math.round(getLexicalDensity(textForOverall) * 100) / 100;
-
+  if (textForOverall.length > 0) {
+    // Decimal rounding and trailing zeros needs to be better addressed
+    overallResult = Math.round(getLexicalDensity(textForOverall, nonLexicalWordsSet) * 100) / 100;
+  }
   return { data: { overall_ld: overallResult, sentence_ld: sentencesResult } };
 }

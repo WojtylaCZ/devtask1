@@ -1,4 +1,4 @@
-FROM node:10 as base
+FROM node:10-alpine as base
 
 ENV NODE_ENV=production
 ENV PORT=8080
