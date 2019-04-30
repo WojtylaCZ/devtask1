@@ -2,21 +2,23 @@
 
 ## Requirements
 
-- `docker` utility if you want to run the server from a docker image
+- `docker-compose`, `docker` utilities if you want to run the server using docker images
 - `yarn` & `node >= 10.0.0` if you want to run the server from a source code
-- Environment variable `PORT`
+- Setup environment variables, presented in [.env-example](.env-example)
 
 ## Getting started
 
-Getting up and running is as easy as 1, 2, 3.
+The easiest way to start the server with testing database is to use `docker-compose`
+
+```
+docker-compose up
+```
+
+You can also start only the server and configure the database through `.env` file for example.
 
 1. Build the docker image: `docker build -t foo .`
-2. Decide how you set/update environment variables. E.g. using `.env file`, flag `-e` with `docker run` command etc.
-   A default `PORT` is already set and exposed in the `Dockerfile`, but it can be overwritten.
+2. Decide how you want to set environment variables. There is a template in `.env-example`. A default `PORT` is already set and exposed in the `Dockerfile`, but it can be overwritten. Using docker there are flags `-e` or `--env-file .env`)
 3. Run the server: `docker run -p XXXX:XXXX foo`
-
-Note: You can use `.env` file as well
-(example in `.env-example`) if you like. (Hint: when using docker it is a flag `--env-file .env`)
 
 ## Usage
 
@@ -40,7 +42,7 @@ Execute `POST` http request to endpoint `http://HOST:PORT/complexity?mode=verbos
 
 ### .env file
 
-You can use .env in the root of the folder for your convenience to setup the environment variables.
+You can use `.env` file in the root of the folder for your convenience to setup the environment variables.
 
 ### Run from source
 

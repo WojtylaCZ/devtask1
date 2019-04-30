@@ -2,16 +2,19 @@ import { Server } from 'http';
 import * as request from 'supertest';
 
 import koaApp from '../../../app';
+import NonLexicalWordSchema from '../models/NonLexicalWordSchema';
 import { router } from '../routes';
 let app: Server;
 
 describe('complexity api', () => {
   beforeEach(() => {
     app = koaApp.listen();
+    jest.spyOn(NonLexicalWordSchema, 'find').mockReturnValueOnce(Promise.resolve([]) as any);
   });
 
   afterEach(() => {
     app.close();
+    jest.resetAllMocks();
   });
 
   it('returns 200 for valid text-lexical-complexity POST', async () => {
