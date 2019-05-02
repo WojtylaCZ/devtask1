@@ -38,6 +38,14 @@ Execute `POST` http request to endpoint `http://HOST:PORT/complexity?mode=verbos
 }
 ```
 
+Execute `POST` http request to endpoint `http://HOST:PORT/nonlexicalwords/add` to add a new non lexical word to db. There is required `word` attribute (lowercase, alphabet characters only) in JSON in body of the request.
+
+```json
+{
+  "word": "lorem"
+}
+```
+
 ## Development
 
 ### .env file
