@@ -9,3 +9,9 @@ export const complexityApiBody = Joi.object({
 export const modeApiParam = Joi.object({
   mode: Joi.string().only(['verbose'])
 });
+
+export const addNonLexicalWordApiBody = Joi.object({
+  word: Joi.string()
+    .regex(/^[a-z]+$/, { name: 'lowercase alphabet' })
+    .required()
+});

@@ -3,12 +3,15 @@ import * as Joi from 'joi';
 import { ApiError } from '../../common/api/errors/ApiError';
 import IApiResponse from '../../common/api/IApiResponse';
 
-import { IComplexityApiResponse, ITextInput } from './interfaces';
+import { IAddNonLexicalWordApiRequestBody, IComplexityApiRequestBody, IComplexityApiResponse } from './interfaces';
 import NonLexicalWordSchema from './models/NonLexicalWordSchema';
 import { getLexicalDensity } from './utils';
-import { complexityApiBody, modeApiParam } from './validations';
+import { addNonLexicalWordApiBody, complexityApiBody, modeApiParam } from './validations';
 
-export async function lexicalComplexity(body: ITextInput, params: any): Promise<IApiResponse<IComplexityApiResponse>> {
+export async function lexicalComplexity(
+  body: IComplexityApiRequestBody,
+  params: any
+): Promise<IApiResponse<IComplexityApiResponse>> {
   // Validation
   Joi.validate(body, complexityApiBody, (error: Error) => {
     if (error) {
@@ -61,4 +64,20 @@ export async function lexicalComplexity(body: ITextInput, params: any): Promise<
     overallResult = Math.round(getLexicalDensity(textForOverall, nonLexicalWordsSet) * 100) / 100;
   }
   return { data: { overall_ld: overallResult, sentence_ld: sentencesResult } };
+}
+
+export async function addNonLexicalWord(body: IAddNonLexicalWordApiRequestBody): Promise<void> {
+  // Validation
+  Joi.validate(body, addNonLexicalWordApiBody, (error: Error) => {
+    if (error) {
+      throw new ApiError(error.message);
+    }
+  });
+
+  // Resolution
+  if (await NonLexicalWordSchema.findOne({ value: body.word })) {
+    throw new ApiError('Word already exists');
+  } else {
+    await NonLexicalWordSchema.create({ value: body.word });
+  }
 }
